@@ -1,0 +1,80 @@
+@use "../../styles/partials/typography" as *;
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/mixins" as *;
+
+/* DataTable.scss */
+.datatable-container {
+  margin: 20px;
+}
+
+.display {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 8px 12px;
+  text-align: left;
+}
+th {
+  background-color: $white1;
+}
+
+tr:nth-child(even) {
+  background-color: $white3;
+}
+
+tr:hover {
+  background-color: #eff2f1;
+}
+
+.dt-input {
+  border-radius: 24px;
+  height: 2.4rem;
+  padding: 0.5rem;
+}
+
+.dt-layout-row:first-of-type,
+.dt-layout-row:last-of-type {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 1.6rem 0;
+}
+
+.dt-paging-button {
+  height: 2rem;
+  width: 2rem;
+  padding: 0.5rem;
+  background-color: $black1;
+  margin-left: 0.5rem;
+  border: none;
+  border-radius: 24px;
+  color: $white1;
+  font-size: 0.8rem;
+}
+
+.dt-search {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.2rem;
+}
+
+.dt-input {
+  // background-color: #d6d6d6;
+  border: 1px solid $grey3;
+}
+
+.dataTable a {
+  cursor: pointer;
+}
+
+.dataTable a:hover {
+  color: $blue2;
+}
+
+.dt-length {
+  color: #fff;
+}
