@@ -48,19 +48,6 @@
   margin: 0 0 1rem;
 }
 
-// Font Faces
-// @include font-face(
-//   "Roboto Condensed",
-//   "../../assets/fonts/Roboto_Condensed/static/RobotoCondensed-Regular.ttf",
-//   400
-// );
-
-// Usage
-// body {
-//   font-family: "Roboto Condensed", Arial, sans-serif;
-//   @include body-text();
-// }
-
 h1,
 .h1 {
   @include heading(2.5rem, 1.2);
