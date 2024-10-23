@@ -17,8 +17,8 @@ function Datatables({data}) {
     },
     { data: 'job_title' },
     { data: 'company' },
-    { data: 'mobile_phone' },
-    { data: 'email' },
+    { data: 'personal_phone' },
+    { data: 'personal_email' },
   ];
  
     useEffect(() => {    
@@ -34,7 +34,7 @@ function Datatables({data}) {
                     <th>Job title</th>
                     <th>Company</th>
                     <th>Email</th>
-                    <th>Mobile phone</th>
+                    <th>Phone</th>
                 </tr>
             </thead>
         </DataTable>

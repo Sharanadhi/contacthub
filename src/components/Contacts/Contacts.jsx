@@ -1,18 +1,55 @@
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 // import Sidebar from '../Sidebar/Sidebar';
 import Datatables from '../Datatables/Datatables';
-import contacts_data from '../../data/MOCK_DATA.json';
 import './Contacts.scss';
 
 function Contacts() {
+  const [contacts, setContacts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const token = localStorage.getItem('token');
+      console.log(token);
+      if (!token) {
+        setError("No token found");
+        setLoading(false);
+        return;
+      }
+
+      try {
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}contacts`, {
+          headers: {
+            authorization: `Bearer ${token}`
+          }
+        });
+        setContacts(response.data.contacts);
+        setLoading(false);
+      } catch (error) {
+        console.log(error);
+        
+        setError("Failed to fetch contacts data.");
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <section className="contacts">
       {/* <Sidebar /> */}
       <div className='contacts__card'>
         <div className="contacts__card-header">
           <h1 className='contacts__heading'>Contacts</h1>
+          <button href='/contacts/create' className='contacts__link'>Create</button>
         </div>
         <div className='contacts__card-body'>
-          <Datatables data={contacts_data} />
+          {loading && <p>Loading...</p>}
+          {error && <p className="error-message">{error}</p>}
+          {!loading && !error && <Datatables data={contacts} />}
         </div>
       </div>
     </section>

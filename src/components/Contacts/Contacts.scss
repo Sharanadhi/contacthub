@@ -18,6 +18,15 @@
   }
   &__card-header {
     border-bottom: 1px solid $grey1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    button {
+      background-color: $black1;
+      color: $white;
+      border: none;
+      border-radius: 24px;
+    }
   }
   &__card-body {
     padding: 1rem;
