@@ -55,7 +55,7 @@ button {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   gap: 1.2rem;
 }
 
@@ -99,6 +99,15 @@ textarea {
   flex-direction: column;
   align-items: center;
   gap: 1.2rem;
+}
+
+.error-message {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  color: $red2;
+  @include small-text;
 }
 
 .divider {
