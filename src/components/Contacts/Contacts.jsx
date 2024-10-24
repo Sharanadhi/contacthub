@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-// import Sidebar from '../Sidebar/Sidebar';
+import {Link} from 'react-router-dom'
+import Sidebar from '../Sidebar/Sidebar';
 import Datatables from '../Datatables/Datatables';
 import './Contacts.scss';
 
@@ -12,7 +13,6 @@ function Contacts() {
   useEffect(() => {
     const fetchData = async () => {
       const token = localStorage.getItem('token');
-      console.log(token);
       if (!token) {
         setError("No token found");
         setLoading(false);
@@ -40,11 +40,11 @@ function Contacts() {
 
   return (
     <section className="contacts">
-      {/* <Sidebar /> */}
+      <Sidebar />
       <div className='contacts__card'>
         <div className="contacts__card-header">
           <h1 className='contacts__heading'>Contacts</h1>
-          <button href='/contacts/create' className='contacts__link'>Create</button>
+        <Link to={`/contacts/create`} className='contacts__link'>Create</Link>
         </div>
         <div className='contacts__card-body'>
           {loading && <p>Loading...</p>}

@@ -1,13 +1,14 @@
-import { useEffect,useState } from 'react';
+import { useEffect, useState } from 'react';
 import DataTable from 'datatables.net-react';
 import DT from 'datatables.net-dt';
-import './Datatables.scss'
- 
+import './Datatables.scss';
 
-function Datatables({data}) {
+function Datatables({ data }) {
   DataTable.use(DT);
   const [tableData, setTableData] = useState([]);
+
   const columns = [
+    {data:'id'},
     {
       data: null,
       render: function (data) {
@@ -20,25 +21,31 @@ function Datatables({data}) {
     { data: 'personal_phone' },
     { data: 'personal_email' },
   ];
- 
-    useEffect(() => {    
-      setTableData(data);
-    }, [data]);
 
-    return (
-        <DataTable data={tableData}  columns={columns} className="display">
-            <thead>
-                <tr>
-                   
-                    <th>Full name</th>
-                    <th>Job title</th>
-                    <th>Company</th>
-                    <th>Email</th>
-                    <th>Phone</th>
-                </tr>
-            </thead>
-        </DataTable>
-    );
+  useEffect(() => {
+    setTableData(data);
+  }, [data]);
+
+  const tableOptions = {
+    data: tableData,
+    columns: columns,
+    order: [[0, 'asc']], 
+  };
+
+  return (
+    <DataTable {...tableOptions} className="display">
+      <thead>
+        <tr>
+          <th>Contact id</th>
+          <th>Full name</th>
+          <th>Job title</th>
+          <th>Company</th>
+          <th>Email</th>
+          <th>Phone</th>
+        </tr>
+      </thead>
+    </DataTable>
+  );
 }
- 
+
 export default Datatables;

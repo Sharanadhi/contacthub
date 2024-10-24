@@ -21,14 +21,17 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    button {
-      background-color: $black1;
-      color: $white;
-      border: none;
-      border-radius: 24px;
-    }
   }
   &__card-body {
     padding: 1rem;
+  }
+  &__link {
+    height: 2rem;
+    width: auto;
+    padding: 0.5rem 1.2rem;
+    background-color: $black1;
+    color: $white;
+    border: none;
+    border-radius: 24px;
   }
 }
