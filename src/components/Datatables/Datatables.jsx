@@ -8,7 +8,7 @@ function Datatables({ data }) {
   const [tableData, setTableData] = useState([]);
 
   const columns = [
-    {data:'id'},
+    // { data: 'id', title: 'Contact ID' },
     {
       data: null,
       render: function (data) {
@@ -16,10 +16,10 @@ function Datatables({ data }) {
       },
       title: 'Full Name',
     },
-    { data: 'job_title' },
-    { data: 'company' },
-    { data: 'personal_phone' },
-    { data: 'personal_email' },
+    { data: 'job_title', title: 'Job Title' },
+    { data: 'company', title: 'Company' },
+    { data: 'personal_phone', title: 'Phone' },
+    { data: 'personal_email', title: 'Email' },
   ];
 
   useEffect(() => {
@@ -29,19 +29,16 @@ function Datatables({ data }) {
   const tableOptions = {
     data: tableData,
     columns: columns,
-    order: [[0, 'asc']], 
+    order: []
   };
 
   return (
     <DataTable {...tableOptions} className="display">
       <thead>
         <tr>
-          <th>Contact id</th>
-          <th>Full name</th>
-          <th>Job title</th>
-          <th>Company</th>
-          <th>Email</th>
-          <th>Phone</th>
+          {columns.map((column, index) => (
+            column.visible !== false && <th key={index}>{column.title}</th>
+          ))}
         </tr>
       </thead>
     </DataTable>

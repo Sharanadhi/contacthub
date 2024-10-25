@@ -1,34 +1,32 @@
 import { Timeline, TimelineItem, TimelineSeparator, TimelineConnector, TimelineContent, TimelineDot, TimelineOppositeContent } from '@mui/lab';
 
-function CustomTimeline() {
+function CustomTimeline({ logs }) {
+  console.log(logs);
+
+  const formatDate = (datetime) => {
+    const date = new Date(datetime);
+    return date.toLocaleString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit'
+    });
+  }
+
   return (
-    <Timeline position="alternate">
-      <TimelineItem>
-        <TimelineOppositeContent>22/10/2024 09:30 am</TimelineOppositeContent>
-        <TimelineSeparator>
+    <Timeline position="right">
+      {logs.map((log, index) => (
+        <TimelineItem key={index}>
+          <TimelineOppositeContent><b>{formatDate(log.created_at)}</b></TimelineOppositeContent>
+          <TimelineSeparator>
           <TimelineDot />
-          <TimelineConnector />
-        </TimelineSeparator>
-        <TimelineContent>Event One</TimelineContent>
-      </TimelineItem>
-
-      <TimelineItem>
-        <TimelineOppositeContent>14/06/2024 10:00 am</TimelineOppositeContent>
-        <TimelineSeparator>
-          <TimelineDot />
-          <TimelineConnector />
-        </TimelineSeparator>
-        <TimelineContent>Event Two</TimelineContent>
-      </TimelineItem>
-
-      <TimelineItem>
-        <TimelineOppositeContent>01/01/2024 11:00 am</TimelineOppositeContent>
-        <TimelineSeparator>
-          <TimelineDot />
-          <TimelineConnector />
-        </TimelineSeparator>
-        <TimelineContent>Event Three</TimelineContent>
-      </TimelineItem>
+            {index < logs.length - 1 && <TimelineConnector />}
+          </TimelineSeparator>
+          <TimelineContent><b>{`${log.user_name} `}</b> updated <q>{log.log_data}</q></TimelineContent>
+        </TimelineItem>
+      ))}
     </Timeline>
   );
 }

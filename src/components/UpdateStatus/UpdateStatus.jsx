@@ -1,36 +1,96 @@
-import { useState } from 'react'
-import axios from 'axios'
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from "react";
+import axios from "axios";
+import Divider from "@mui/material/Divider";
+
 import { FaCircleExclamation } from "react-icons/fa6";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css'
+import {  toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-
-import './createContact.scss'
-import Sidebar from '../Sidebar/Sidebar.jsx'
-
-function CreateContact() {
-  const [formData, setFormData] = useState(
-    {
-      first_name:"",
-      last_name:"",
-      job_title:"",
-      company:"",
-      business_email:"",
-      personal_email:"",
-      business_phone:"",
-      personal_phone:"",
-      address:"",
-      status:"",
-      comments:"",
-      profile_picture:"",
-      linked_in:"", 
-    }
-  );
+function UpdateStatus({
+  contactStatus,
+  setContactStatus,
+  contactComment,
+  setContactComment,
+  contact
+}) {
+  const baseUrl = import.meta.env.VITE_API_URL;
+  const [updateErrorMessage, setUpdateErrorMessage] = useState("");
   const [errors, setErrors] = useState({});
   const [apiError, setApiError] = useState("");
-  const baseUrl = import.meta.env.VITE_API_URL;
-  const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    first_name: '',
+    last_name: '',
+    job_title: '',
+    company: '',
+    business_email: '',
+    personal_email: '',
+    business_phone: '',
+    personal_phone: '',
+    address: '',
+    linked_in: ''
+  });
+
+  useEffect(() => {
+    if (contact) {
+      setFormData({
+        first_name: contact.first_name || '',
+        last_name: contact.last_name || '',
+        job_title: contact.job_title || '',
+        company: contact.company || '',
+        business_email: contact.business_email || '',
+        personal_email: contact.personal_email || '',
+        business_phone: contact.business_phone || '',
+        personal_phone: contact.personal_phone || '',
+        address: contact.address || '',
+        linked_in: contact.linked_in || ''
+      });
+    }
+  }, [contact]);
+
+  const updateContactStatus = async (e) => {
+    e.preventDefault();
+    const token = localStorage.getItem("token");
+
+    if (!contactStatus) {
+      setUpdateErrorMessage("Please select a status.");
+      return;
+    }
+
+    try {
+      const response = await axios.put(
+        `${import.meta.env.VITE_API_URL}contacts/status/${contact.id}`,
+        {
+          status: contactStatus,
+          comments: contactComment,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setContactComment("");
+      toast.success(response.data.message, {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: "dark",
+        progress: undefined,
+      });
+      setUpdateErrorMessage('');
+    } catch (error) {
+      console.error("Error updating contact status", error);
+      if (error.response) {
+        setUpdateErrorMessage(error.response.data.message);
+      } else {
+        setUpdateErrorMessage("An error occurred");
+      }
+    }
+  };
+ 
   const validatePhoneNumber = (phone) => {
     const phoneRegex1 = /^\+\d{1,3} \(\d{3}\) \d{3}-\d{4}$/;
     const phoneRegex2 = /^(\+[1-9]{1}[0-9]{3,14})?([0-9]{9,14})$/; 
@@ -58,7 +118,7 @@ function CreateContact() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
+  const updateDetails = async (e) => {
     e.preventDefault();
     setApiError('');
     const token = localStorage.getItem('token');
@@ -68,29 +128,15 @@ function CreateContact() {
       return;
     }
     try {
-      const response = await axios.post(`${baseUrl}contacts`, formData, {
+      const response = await axios.put(`${baseUrl}contacts/${contact.id}`, formData, {
         headers: {
           authorization: `Bearer ${token}`
         }
       });
-      if(response.data && response.status===201){
-        setFormData({
-          first_name:"",
-          last_name:"",
-          job_title:"",
-          company:"",
-          business_email:"",
-          personal_email:"",
-          business_phone:"",
-          personal_phone:"",
-          address:"",
-          status:"",
-          comments:"",
-          profile_picture:"",
-          linked_in:"", 
-        });
+      if(response.data && response.status===200){
+        
         setErrors({});
-        toast.success("Contact added successful!", {
+        toast.success("Contact updated successfully!", {
           position: "top-right",
           autoClose: 2000,
           hideProgressBar: false,
@@ -100,14 +146,11 @@ function CreateContact() {
           theme: "dark",
           progress: undefined,
         });
-        setTimeout(() => navigate("/contacts"), 2000);
       }
     } catch (error) {
       
       if (error.response && error.response.data && error.response.data.error) {
         setApiError(error.response.data.error);
-        // if(error.response.data.type==='email') setEmailApiError(error.response.data.error);
-        // if(error.response.data.type==='phone') setPhoneApiError(error.response.data.error)
       } else {
         setApiError("An error occurred during creating the contact. Please try again later");
       }
@@ -115,15 +158,43 @@ function CreateContact() {
   };
 
   return (
-    <>
-      <section className="createContact">
-      <Sidebar />
-        <div className='createContact__card'>
-          <div className="createContact__card-header">
-            <h1 className='createContact__heading'>Add New Contact</h1>
-          </div>
-          <div className="createContact__card-body">
-            <form onSubmit={handleSubmit} className="createContact__form">
+    <section className="info">
+      <h2>Update</h2>
+      <form onSubmit={updateContactStatus} className="info__form">
+        <div className="input__group">
+          <select
+            name="contact_status"
+            className="select"
+            value={contactStatus}
+            onChange={(e) => setContactStatus(e.target.value)}
+          >
+            <option value="">Select Status</option>
+            <option value="New">New</option>
+            <option value="Open">Open</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Open Deals">Open deals</option>
+            <option value="Closed">Closed</option>
+          </select>
+        </div>
+        <div className="input__group">
+          <textarea
+            name="contact__comment"
+            placeholder="Comments"
+            value={contactComment}
+            onChange={(e) => setContactComment(e.target.value)}
+          ></textarea>
+          {updateErrorMessage && <p>{updateErrorMessage}</p>}
+        </div>
+        <div className="btn__group">
+          <button type="submit" className="primary__btn">
+            Update
+          </button>
+        </div>
+      </form>
+      
+      <Divider className="divider" variant="middle" />
+      <br />
+      <form onSubmit={updateDetails} className="createContact__form">
               <div className="form__section">
               <div className="input__group">
                 <label htmlFor="first_name">First Name</label>
@@ -209,22 +280,20 @@ function CreateContact() {
              
               <div className="input__group">
                 <label htmlFor="">Linked in</label>
-                <input type="text" placeholder='Linked in profile url' className='createContact__input' name='linked_in'  value={formData.linked_in}
-              onChange={handleChange}/>
+                <input type="text" name="linked_in" placeholder='Linked in profile url' className='createContact__input' value={formData.linked_in}
+              onChange={handleChange} />
               </div>
               </div>
-             
-              <ToastContainer />
             </form>
-          </div>
-          <div className="createContact__card-footer">
-            <button className='createContact__button--cancel'>Cancel</button>
-            <button className='createContact__button--save' type='submit' onClick={handleSubmit}>Save</button>
-          </div>
+            <br />
+            <div className="btn__group">
+          <button type="submit" className="primary__btn" onClick={updateDetails}>
+            Update
+          </button>
+
         </div>
-      </section>
-    </>
-)
+    </section>
+  );
 }
 
-export default CreateContact
+export default UpdateStatus;

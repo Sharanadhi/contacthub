@@ -18,7 +18,6 @@ function Contacts() {
         setLoading(false);
         return;
       }
-
       try {
         const response = await axios.get(`${import.meta.env.VITE_API_URL}contacts`, {
           headers: {
