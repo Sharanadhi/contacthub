@@ -11,7 +11,8 @@ function UpdateStatus({
   setContactStatus,
   contactComment,
   setContactComment,
-  contact
+  contact,
+  setLogs
 }) {
   const baseUrl = import.meta.env.VITE_API_URL;
   const [updateErrorMessage, setUpdateErrorMessage] = useState("");
@@ -47,6 +48,39 @@ function UpdateStatus({
     }
   }, [contact]);
 
+  const fetchLogs = async () => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      return;
+    }
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_URL}contacts/logs/${contact.id}`,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setLogs(response.data);
+    } catch (error) {
+      console.log(error.response.data.error);
+      if (error.response.data.error === "Failed to authenticate token") {
+        toast.warning("Your session expired. Please sign in again", {
+          position: "top-right",
+          autoClose: 500,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          theme: "dark",
+          progress: undefined,
+        });
+        
+      }
+    }
+  };
+
   const updateContactStatus = async (e) => {
     e.preventDefault();
     const token = localStorage.getItem("token");
@@ -80,6 +114,7 @@ function UpdateStatus({
         theme: "dark",
         progress: undefined,
       });
+      fetchLogs();
       setUpdateErrorMessage('');
     } catch (error) {
       console.error("Error updating contact status", error);

@@ -19,16 +19,17 @@ import {
   FaLocationArrow,
   FaAddressCard,
   FaCamera,
-  // FaAngleRight,
+  FaHandshake,
 } from "react-icons/fa6";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import Sidebar from "../Sidebar/Sidebar";
 import TabPanel from "../TabPanel/TabPanel";
 import CustomTimeline from "../CustomTimeline/CustomTimeline";
 import ContactStages from "../ContactStages/ContactStages";
-import UpdateStatus from "../UpdateStatus/UpdateStatus"
+import UpdateStatus from "../UpdateStatus/UpdateStatus";
+import ContactDeals from '../ContactDeals/ContactDeals'
+import AddDealForm from '../AddDealForm/AddDealForm'
 
 import "./ContactDetails.scss";
 
@@ -39,7 +40,7 @@ const style = {
   transform: "translate(-50%, -50%)",
   width: 400,
   bgcolor: "background.paper",
-  boxShadow: 24,
+  boxShadow: 2,
   p: 4,
 };
 
@@ -47,6 +48,8 @@ function ContactDetails() {
   const [tabvalue, setTabValue] = useState(0);
   const [contact, setContact] = useState([]);
   const [logs, setLogs] = useState([]);
+  const [deals, setDeals] = useState([]);
+  
   const params = useParams();
   const contact_id = params.contactId;
   const navigate = useNavigate();
@@ -59,12 +62,14 @@ function ContactDetails() {
   const [message, setMessage] = useState("");
   const [profilePic, setProfilePic] = useState("");
 
-  const [contactStatus, setContactStatus] = useState('');
-  const [contactComment, setContactComment] = useState('');
+  const [contactStatus, setContactStatus] = useState("");
+  const [contactComment, setContactComment] = useState("");
 
   const onFileChange = (e) => {
     setFile(e.target.files[0]);
   };
+
+
 
   const fileUpload = async (e) => {
     e.preventDefault();
@@ -121,7 +126,6 @@ function ContactDetails() {
         setProfilePic(response.data.contacts[0].profile_picture);
         setContactStatus(response.data.contacts[0].status);
         setContact(response.data.contacts[0]);
-
       } catch (error) {
         console.log(error.response.data.error);
         if (error.response.data.error === "Failed to authenticate token") {
@@ -154,7 +158,6 @@ function ContactDetails() {
             },
           }
         );
-        console.log(response.data)
         setLogs(response.data);
       } catch (error) {
         console.log(error.response.data.error);
@@ -174,10 +177,43 @@ function ContactDetails() {
       }
     };
 
+    const fetchDeals = async () => {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        return;
+      }
+      try {
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_URL}contacts/deals/${contact_id}`,
+          {
+            headers: {
+              authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        console.log(response.data);
+        setDeals(response.data);
+      } catch (error) {
+        if (error.response.data.error === "Failed to authenticate token") {
+          toast.warning("Your session expired. Please sign in again", {
+            position: "top-right",
+            autoClose: 500,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            theme: "dark",
+            progress: undefined,
+          });
+          setTimeout(() => navigate("/"), 500);
+        }
+      }
+    };
 
     fetchData();
     fetchLogs();
-  }, [contact_id,navigate]);
+    fetchDeals();
+  }, [contact_id, navigate]);
 
   const handleTabChange = (event, newValue) => {
     setTabValue(newValue);
@@ -187,39 +223,43 @@ function ContactDetails() {
     return `${firstName?.charAt(0) || ""}${lastName?.charAt(0) || ""}`;
   };
 
-
   function removeLinkedInUrl(inputString) {
-    const url = 'https://www.linkedin.com/';
+    const url = "https://www.linkedin.com/";
 
-    if (inputString) return inputString.replace(url, '');
-    else return ''
+    if (inputString) return inputString.replace(url, "");
+    else return "";
   }
- 
 
   return (
     <section className="contactDetails">
-      <Sidebar />
       <div className="contactDetails__container">
         <div className="profilecard">
           <div className="profilecard__card-header">
             {profilePic && (
+             <div className="profilecard__img-container" onClick={handleOpen}>
               <img
                 src={profilePic}
                 alt="profile image"
                 className="profilecard__img"
-                onClick={handleOpen}
+                
               />
+              <div className="profilecard__img-container__overlay">
+                <FaCamera className="camera-icon"/>
+              </div>
+             </div>
             )}
             {!profilePic && (
-              <div className="profilecard__templatecard">
-                <div className="circle__div blue-bg" onClick={handleOpen}>
+              <div className="profilecard__templatecard blue-bg" onClick={handleOpen}>
+                {/* <div className="circle__div blue-bg" onClick={handleOpen}> */}
+                  <div>
                   <h1 className="profile_initials">
                     {getInitials(contact.first_name, contact.last_name)}
                   </h1>
-                  <a href="#" className="profilecard__templatecard-link">
-                    <FaCamera />
-                  </a>
-                </div>
+                  </div>
+                  <div className="profilecard__templatecard__overlay">
+                <FaCamera className="camera-icon"/>
+              </div>
+                {/* </div> */}
               </div>
             )}
             <div className="profilecard__titlebox">
@@ -227,7 +267,9 @@ function ContactDetails() {
                 {contact.first_name} {contact.last_name}
               </h3>
               <p className="profilecard__title">{contact.job_title}</p>
-              <a href={contact.linked_in} target="_blank">{removeLinkedInUrl(contact.linked_in)}</a>
+              <a href={contact.linked_in} target="_blank">
+                {removeLinkedInUrl(contact.linked_in)}
+              </a>
             </div>
             <div className="profilecard__card-links">
               <a className="profilecard__link" href="#">
@@ -270,7 +312,7 @@ function ContactDetails() {
                 Contact details
               </Typography>
             </Breadcrumbs>
-            <ContactStages currentStage={contactStatus}/>
+            <ContactStages currentStage={contactStatus} />
           </div>
           <div className="detailscard__card-header">
             <Tabs
@@ -285,73 +327,31 @@ function ContactDetails() {
                 label="Details"
               />
               <Tab icon={<FaPhone />} iconPosition="start" label="Activity" />
-              <Tab icon={<FaCalendar />} iconPosition="start" label="Deals" />
+              <Tab icon={<FaHandshake />} iconPosition="start" label="Deals" />
               <Tab icon={<FaEnvelope />} iconPosition="start" label="Notes" />
             </Tabs>
           </div>
           <div className="detailscard__card-body">
             <TabPanel value={tabvalue} index={0}>
-              <UpdateStatus 
-                contactStatus={contactStatus} 
-                setContactStatus={setContactStatus} 
-                contactComment={contactComment}  
+              <UpdateStatus
+                contactStatus={contactStatus}
+                setContactStatus={setContactStatus}
+                contactComment={contactComment}
                 setContactComment={setContactComment}
                 contact={contact}
-                
+                setLogs={setLogs}
               />
             </TabPanel>
             <TabPanel value={tabvalue} index={1}>
-              <CustomTimeline logs={logs}/>
+              <CustomTimeline logs={logs} />
             </TabPanel>
             <TabPanel value={tabvalue} index={2}>
               <section className="deals">
                 <h2>Deals</h2>
-                <div className="deals__container">
-                  <div className="deals__card">
-                    <div className="deals__body">
-                      <h3 className="deals__title">Deal 1</h3>
-                      <p className="deals__desc">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Reprehenderit sit suscipit eum totam adipisci tempora
-                        accusantium quasi ut, velit maxime tenetur repellat
-                        possimus aliquid quas! Vel aliquid itaque autem est.
-                      </p>
-                    </div>
-                    <div className="deals__footer">
-                      <button className="primary__btn">View</button>
-                    </div>
-                  </div>
-
-                  <div className="deals__card">
-                    <div className="deals__body">
-                      <h3 className="deals__title">Deal 2</h3>
-                      <p className="deals__desc">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Reprehenderit sit suscipit eum totam adipisci tempora
-                        accusantium quasi ut, velit maxime tenetur repellat
-                        possimus aliquid quas! Vel aliquid itaque autem est.
-                      </p>
-                    </div>
-                    <div className="deals__footer">
-                      <button className="primary__btn">View</button>
-                    </div>
-                  </div>
-
-                  <div className="deals__card">
-                    <div className="deals__body">
-                      <h3 className="deals__title">Deal 3</h3>
-                      <p className="deals__desc">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Reprehenderit sit suscipit eum totam adipisci tempora
-                        accusantium quasi ut, velit maxime tenetur repellat
-                        possimus aliquid quas! Vel aliquid itaque autem est.
-                      </p>
-                    </div>
-                    <div className="deals__footer">
-                      <button className="primary__btn">View</button>
-                    </div>
-                  </div>
-                </div>
+                <AddDealForm setDeals={setDeals} contact_id={contact_id}/>
+                <Divider className="divider" variant="middle"/>
+                <br />
+                <ContactDeals deals={deals} />
               </section>
             </TabPanel>
             <TabPanel value={tabvalue} index={3}>

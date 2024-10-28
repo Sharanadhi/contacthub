@@ -69,7 +69,7 @@ function Signup(){
           theme: "dark",
           progress: undefined,
         });
-        setTimeout(() => navigate("/contacts"), 2000);
+        setTimeout(() => navigate("/"), 2000);
       }
     } catch (error) {
       console.error("Error signing in", error);

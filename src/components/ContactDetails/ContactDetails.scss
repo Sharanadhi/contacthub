@@ -3,11 +3,11 @@
 @use "../../styles/partials/mixins" as *;
 
 .contactDetails {
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   align-items: start;
   justify-content: flex-start;
-  // gap: 1.2rem;
+  gap: 1.2rem;
 
   &__container {
     width: 100%;
@@ -37,7 +37,7 @@
   @include media-query("tablet") {
     display: flex;
     align-items: flex-start;
-    justify-content: space-between;
+    justify-content: space-around;
     gap: 2rem;
   }
   @include media-query("desktop") {
@@ -46,6 +46,35 @@
     min-width: 20rem;
   }
 
+  &__img-container {
+    position: relative;
+    display: inline-block;
+
+    &__overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 24px;
+      opacity: 0;
+      transition: opacity 0.3s;
+      cursor: pointer;
+      color: $white1;
+
+      .camera-icon {
+        color: $white1;
+        font-size: 2.4rem;
+      }
+    }
+    &:hover .profilecard__img-container__overlay {
+      opacity: 1;
+    }
+  }
   &__img {
     height: 18rem;
     width: auto;
@@ -53,9 +82,11 @@
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     order: 1;
     cursor: pointer;
+
     @include media-query("tablet") {
       height: 9rem;
     }
+
     @include media-query("desktop") {
       height: 18rem;
       width: auto;
@@ -71,7 +102,6 @@
     gap: 1.2rem;
     flex-wrap: wrap;
     @include media-query("tablet") {
-      flex-direction: row;
       justify-content: flex-start;
     }
     @include media-query("desktop") {
@@ -153,8 +183,14 @@
 
   &__header {
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    align-items: flex-start;
     justify-content: space-between;
+    gap: 1.2rem;
+    @include media-query("tablet") {
+      flex-direction: row;
+      align-items: center;
+    }
   }
 
   &__card-header {
@@ -224,7 +260,8 @@
   }
   &__card {
     height: auto;
-    width: 20rem;
+    min-height: 20rem;
+    width: 15rem;
     padding: 1rem;
     display: flex;
     flex-direction: column;
@@ -232,7 +269,7 @@
     box-shadow: rgba(145, 158, 171, 0.2) 0px 0px 2px 0px,
       rgba(145, 158, 171, 0.12) 0px 12px 24px -4px;
     border-radius: 8px;
-    flex: 1;
+    // flex: 1;
   }
 }
 
@@ -249,52 +286,46 @@
 }
 
 .profilecard__templatecard {
-  height: 15rem;
-  width: 13rem;
-  // border: 1px solid #ddd;
+  height: 12rem;
+  width: 12rem;
+  border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
   position: relative;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;
-}
-
-.circle__div {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px,
-    rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
   cursor: pointer;
-}
-
-.blue-bg {
-  background-color: $white1;
+  font-size: 6rem;
   color: $grey1;
+
+  &__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s;
+    cursor: pointer;
+    color: $white1;
+
+    .camera-icon {
+      color: $white1;
+      font-size: 2.4rem;
+    }
+  }
+  &:hover .profilecard__templatecard__overlay {
+    opacity: 1;
+  }
 }
 
-.blue-bg:hover {
-  background-color: $white3;
-  color: $black1;
-}
-
-.circle__div h1 {
-  margin: 0;
-}
-
-.profilecard__templatecard-link {
-  // color: $grey1;
-  position: absolute;
-  bottom: 10px;
-  left: 50%;
-  transform: translateX(-50%);
+.profile_initials {
+  font-size: 8rem;
 }
 
 .upload__form {
@@ -317,4 +348,19 @@
   flex-wrap: wrap;
   margin-bottom: 1.2rem;
   border-bottom: 1px solid $grey3;
+}
+
+.MuiBox-root {
+  border-radius: 24px;
+}
+
+.deals__form {
+  margin-bottom: 1.2rem;
+}
+
+.form__half {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.2rem;
 }

@@ -2,10 +2,10 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import {Link} from 'react-router-dom'
 import Datatables from '../Datatables/Datatables';
-import './Contacts.scss';
+import './Deals.scss';
 
-function Contacts() {
-  const [contacts, setContacts] = useState([]);
+function Deals() {
+  const [deals, setDeals] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -18,12 +18,12 @@ function Contacts() {
         return;
       }
       try {
-        const response = await axios.get(`${import.meta.env.VITE_API_URL}contacts`, {
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}deals`, {
           headers: {
             authorization: `Bearer ${token}`
           }
         });
-        setContacts(response.data.contacts);
+        setDeals(response.data.deals);
         setLoading(false);
       } catch (error) {
         console.log(error);
@@ -37,20 +37,20 @@ function Contacts() {
   }, []);
 
   return (
-    <section className="contacts">
-      <div className='contacts__card'>
-        <div className="contacts__card-header">
-          <h1 className='contacts__heading'>Contacts</h1>
-        <Link to={`/contacts/create`} className='contacts__link'>Create</Link>
+    <section className="deals">
+      <div className='deals__card'>
+        <div className="deals__card-header">
+          <h1 className='deals__heading'>Deals</h1>
+        <Link to={`/deals/create`} className='deals__link'>Create</Link>
         </div>
-        <div className='contacts__card-body'>
+        <div className='deals__card-body'>
           {loading && <p>Loading...</p>}
           {error && <p className="error-message">{error}</p>}
-          {!loading && !error && <Datatables data={contacts} type="contacts" />}
+          {!loading && !error && <Datatables data={deals} type="deals" />}
         </div>
       </div>
     </section>
   );
 }
 
-export default Contacts;
+export default Deals;

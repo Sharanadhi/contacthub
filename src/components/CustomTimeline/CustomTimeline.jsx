@@ -13,6 +13,10 @@ function CustomTimeline({ logs }) {
       minute: '2-digit',
       second: '2-digit'
     });
+  };
+
+  if (logs.length === 0) {
+    return <h2 className='text-center'>No activities yet</h2>;
   }
 
   return (
@@ -21,10 +25,10 @@ function CustomTimeline({ logs }) {
         <TimelineItem key={index}>
           <TimelineOppositeContent><b>{formatDate(log.created_at)}</b></TimelineOppositeContent>
           <TimelineSeparator>
-          <TimelineDot />
+            <TimelineDot />
             {index < logs.length - 1 && <TimelineConnector />}
           </TimelineSeparator>
-          <TimelineContent><b>{`${log.user_name} `}</b> updated <q>{log.log_data}</q></TimelineContent>
+          <TimelineContent><b>{`${log.user_name}`}</b> updated <q>{log.log_data}</q></TimelineContent>
         </TimelineItem>
       ))}
     </Timeline>

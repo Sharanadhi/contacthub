@@ -4,10 +4,12 @@ import { useNavigate } from 'react-router-dom';
 import { FaCircleExclamation } from "react-icons/fa6";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
-
+import Breadcrumbs from "@mui/material/Breadcrumbs";
+import Link from "@mui/material/Link";
+import Typography from "@mui/material/Typography";
 
 import './createContact.scss'
-import Sidebar from '../Sidebar/Sidebar.jsx'
+// import Sidebar from '../Sidebar/Sidebar.jsx'
 
 function CreateContact() {
   const [formData, setFormData] = useState(
@@ -114,11 +116,39 @@ function CreateContact() {
     }
   };
 
+  const goBack = () =>{
+    setFormData({
+      first_name:"",
+      last_name:"",
+      job_title:"",
+      company:"",
+      business_email:"",
+      personal_email:"",
+      business_phone:"",
+      personal_phone:"",
+      address:"",
+      status:"",
+      comments:"",
+      profile_picture:"",
+      linked_in:"", 
+    });
+    navigate("/contacts");
+  }
+
   return (
     <>
       <section className="createContact">
-      <Sidebar />
+      {/* <Sidebar /> */}
+
         <div className='createContact__card'>
+        <Breadcrumbs aria-label="breadcrumb">
+              <Link underline="hover" color="inherit" href="/contacts">
+                Contacts
+              </Link>
+              <Typography sx={{ color: "text.primary" }}>
+                Create contact
+              </Typography>
+            </Breadcrumbs>
           <div className="createContact__card-header">
             <h1 className='createContact__heading'>Add New Contact</h1>
           </div>
@@ -151,7 +181,7 @@ function CreateContact() {
 
               <div className="input__group">
                 <label htmlFor="job_title">Job Title</label>
-                <input type="text" name="job_title" placeholder='Job Title' className='createContact__input'value={formData.job_title}
+                <input type="text" name="job_title" placeholder='Job Title' className='createContact__input' value={formData.job_title}
               onChange={handleChange}/>
             {errors.job_title && <span className="error-message"><FaCircleExclamation /> 
             {errors.job_title}</span>}  
@@ -218,7 +248,7 @@ function CreateContact() {
             </form>
           </div>
           <div className="createContact__card-footer">
-            <button className='createContact__button--cancel'>Cancel</button>
+            <button className='createContact__button--cancel' onClick={goBack}>Cancel</button>
             <button className='createContact__button--save' type='submit' onClick={handleSubmit}>Save</button>
           </div>
         </div>

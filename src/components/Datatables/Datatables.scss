@@ -10,6 +10,12 @@
 .display {
   width: 100%;
   border-collapse: collapse;
+  overflow-x: scroll;
+  img {
+    height: 2rem;
+    width: 2rem;
+    border-radius: 50%;
+  }
 }
 
 th,
@@ -81,4 +87,10 @@ tr:hover {
 
 .dt-link {
   cursor: pointer;
+}
+
+.table__img {
+  height: 2rem;
+  width: 2rem;
+  border-radius: 50%;
 }

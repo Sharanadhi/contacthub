@@ -1,0 +1,55 @@
+@use "../../styles/partials/typography" as *;
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/mixins" as *;
+
+.dealDetails {
+  min-height: 100vh;
+  display: flex;
+  align-items: start;
+  justify-content: flex-start;
+  gap: 1.2rem;
+
+  &__container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.2rem;
+    flex-wrap: wrap;
+    padding: 1.2rem 2.4rem;
+    @include media-query("tablet") {
+      flex-direction: row;
+      align-items: flex-start;
+    }
+  }
+}
+
+.detailscard {
+  height: auto;
+  padding: 1.2rem 2.4rem;
+  background-color: #ffffff;
+  border-radius: 20px;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  flex: 4;
+
+  &__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1.2rem;
+    @include media-query("tablet") {
+      flex-direction: row;
+      align-items: center;
+    }
+  }
+  &__titlebox {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1.2rem;
+  }
+  &__amount {
+    color: $grey1;
+  }
+}
