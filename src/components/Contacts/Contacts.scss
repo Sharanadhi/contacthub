@@ -1,0 +1,37 @@
+@use "../../styles/partials/typography" as *;
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/mixins" as *;
+
+.contacts {
+  height: 100vh;
+  display: flex;
+  align-items: start;
+  justify-content: flex-start;
+  gap: 1.2rem;
+  &__card {
+    width: 100%;
+    padding: 1.2rem 2.4rem;
+    margin: 1.2rem 2.4rem;
+    border-radius: 24px;
+    background-color: $white;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  }
+  &__card-header {
+    border-bottom: 1px solid $grey1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  &__card-body {
+    padding: 1rem;
+  }
+  &__link {
+    height: 2rem;
+    width: auto;
+    padding: 0.5rem 1.2rem;
+    background-color: $black1;
+    color: $white;
+    border: none;
+    border-radius: 24px;
+  }
+}

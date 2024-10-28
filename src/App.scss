@@ -1,0 +1,153 @@
+@use "./styles/partials/typography" as *;
+@use "./styles/partials/variables" as *;
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+html,
+body {
+  background-color: $white3;
+  color: $black3;
+  font-family: "Roboto Condensed", serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  letter-spacing: 1px;
+  text-rendering: optimizeLegibility;
+  -webkit-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  text-decoration: none;
+  color: $black1;
+  cursor: pointer;
+}
+
+button {
+  cursor: pointer;
+}
+
+.input__group {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.2rem;
+  margin-bottom: 1.2rem;
+}
+
+.btn__group {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+.link__group {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 1.2rem;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="email"],
+input[type="password"],
+input[type="file"],
+textarea {
+  height: 1.6rem;
+  width: 100%;
+  padding: 1.4rem;
+  border-radius: 20px;
+  background-color: $white2;
+  border: 1px solid #f8f9fa;
+  outline: none;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: 1.5px solid $grey1;
+}
+
+select {
+  height: 2.4rem;
+  width: 100%;
+  padding: 0.4rem;
+  border-radius: 20px;
+  background-color: $white2;
+  border: none;
+  outline: none;
+}
+
+textarea {
+  height: 4.8rem;
+}
+
+input[type="file"] button {
+  border: none;
+}
+
+.form__section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.2rem;
+}
+
+.error-message {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  color: $red2;
+  @include small-text;
+}
+
+.divider {
+  height: 1px;
+  width: 90%;
+  border-bottom: 1px solid $grey6;
+  margin-bottom: 1.2rem;
+}
+
+Link,
+button {
+  height: 2rem;
+  width: auto;
+  padding: 0.5rem 1.2rem;
+}
+
+.primary__btn {
+  background-color: $blue5;
+  color: white;
+  border: none;
+  border-radius: 24px;
+}
+
+.primary__btn:hover {
+  background-color: #1789fc;
+}
+
+.danger__btn {
+  background-color: $red2;
+  color: white;
+  border: none;
+  border-radius: 24px;
+}
+
+.text-center {
+  text-align: center;
+}

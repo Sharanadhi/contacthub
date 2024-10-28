@@ -1,0 +1,366 @@
+@use "../../styles/partials/typography" as *;
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/mixins" as *;
+
+.contactDetails {
+  min-height: 100vh;
+  display: flex;
+  align-items: start;
+  justify-content: flex-start;
+  gap: 1.2rem;
+
+  &__container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.2rem;
+    flex-wrap: wrap;
+    padding: 1.2rem 2.4rem;
+    @include media-query("tablet") {
+      flex-direction: row;
+      align-items: flex-start;
+    }
+  }
+}
+
+.profilecard {
+  height: auto;
+  padding: 2rem;
+  background-color: #ffffff;
+  border-radius: 20px;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  flex: 1;
+  min-width: 32rem;
+
+  @include media-query("tablet") {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-around;
+    gap: 2rem;
+  }
+  @include media-query("desktop") {
+    flex-direction: column;
+    align-items: center;
+    min-width: 20rem;
+  }
+
+  &__img-container {
+    position: relative;
+    display: inline-block;
+
+    &__overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 24px;
+      opacity: 0;
+      transition: opacity 0.3s;
+      cursor: pointer;
+      color: $white1;
+
+      .camera-icon {
+        color: $white1;
+        font-size: 2.4rem;
+      }
+    }
+    &:hover .profilecard__img-container__overlay {
+      opacity: 1;
+    }
+  }
+  &__img {
+    height: 18rem;
+    width: auto;
+    border-radius: 24px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    order: 1;
+    cursor: pointer;
+
+    @include media-query("tablet") {
+      height: 9rem;
+    }
+
+    @include media-query("desktop") {
+      height: 18rem;
+      width: auto;
+      border-radius: 24px;
+      box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    }
+  }
+
+  &__card-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.2rem;
+    flex-wrap: wrap;
+    @include media-query("tablet") {
+      justify-content: flex-start;
+    }
+    @include media-query("desktop") {
+      flex-direction: column;
+    }
+    .divider {
+      order: 4;
+      @include media-query("tablet") {
+        display: none;
+      }
+      @include media-query("desktop") {
+        display: block;
+      }
+    }
+  }
+  &__titlebox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 1.2rem;
+    order: 2;
+    @include media-query("tablet") {
+      flex: 4;
+      order: 3;
+      align-items: flex-start;
+    }
+    @include media-query("desktop") {
+      flex: 4;
+      order: 2;
+      align-items: center;
+    }
+  }
+  &__name {
+    line-height: 0.2;
+  }
+  &__title {
+    color: $grey6;
+  }
+  &__card-links {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.2rem;
+    flex-wrap: wrap;
+    order: 3;
+    @include media-query("tablet") {
+      flex: 1;
+    }
+    @include media-query("desktop") {
+      flex-direction: row;
+    }
+  }
+  &__link {
+    height: 2rem;
+    width: 2rem;
+    background-color: $white1;
+    padding: 0.5rem;
+    border-radius: 24px;
+  }
+  &__link:hover {
+    background-color: $grey2;
+    color: $cornflower-blue;
+  }
+  &__header {
+    color: $grey6;
+    font-size: 0.8rem;
+    margin-top: 1rem;
+  }
+}
+
+.detailscard {
+  height: auto;
+  padding: 1.2rem 2.4rem;
+  background-color: #ffffff;
+  border-radius: 20px;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  flex: 4;
+
+  &__header {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1.2rem;
+    @include media-query("tablet") {
+      flex-direction: row;
+      align-items: center;
+    }
+  }
+
+  &__card-header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  &__tabs {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.2rem;
+
+    button {
+      cursor: pointer;
+    }
+  }
+}
+
+.actionsCard {
+  height: auto;
+  padding: 2rem;
+  background-color: #ffffff;
+  border-radius: 20px;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  flex: 1;
+}
+
+.notes {
+  width: 100%;
+  &__form {
+    width: 100%;
+    margin-bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.2rem;
+  }
+  &__list {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+  &__container {
+    padding: 2rem;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  &__date {
+    color: $grey6;
+    align-self: flex-end;
+  }
+}
+
+.deals {
+  width: 100%;
+  &__container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 1.2rem;
+  }
+  &__card {
+    height: auto;
+    min-height: 20rem;
+    width: 15rem;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: rgba(145, 158, 171, 0.2) 0px 0px 2px 0px,
+      rgba(145, 158, 171, 0.12) 0px 12px 24px -4px;
+    border-radius: 8px;
+    // flex: 1;
+  }
+}
+
+.info {
+  width: 100%;
+  &__form {
+    width: 100%;
+    margin-bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.2rem;
+  }
+}
+
+.profilecard__templatecard {
+  height: 12rem;
+  width: 12rem;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;
+  cursor: pointer;
+  font-size: 6rem;
+  color: $grey1;
+
+  &__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s;
+    cursor: pointer;
+    color: $white1;
+
+    .camera-icon {
+      color: $white1;
+      font-size: 2.4rem;
+    }
+  }
+  &:hover .profilecard__templatecard__overlay {
+    opacity: 1;
+  }
+}
+
+.profile_initials {
+  font-size: 8rem;
+}
+
+.upload__form {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.close_button {
+  border-radius: 20px;
+  height: 2rem;
+  border: none;
+  margin-bottom: 1rem;
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-bottom: 1.2rem;
+  border-bottom: 1px solid $grey3;
+}
+
+.MuiBox-root {
+  border-radius: 24px;
+}
+
+.deals__form {
+  margin-bottom: 1.2rem;
+}
+
+.form__half {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.2rem;
+}

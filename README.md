@@ -47,7 +47,7 @@ Sales Teams: Needing tools to track deals, manage leads, and close sales efficie
 
 --Front-end:
     -React
-    -Scss
+    -TypeScript
     -Material-UI for design components
 --Back-end:
     -Node.js
@@ -72,30 +72,30 @@ Sales Teams: Needing tools to track deals, manage leads, and close sales efficie
 ### Mockups
 
 #### Sign up Page
-![](./mockup/sign_up.png)
+![](sign_up.png)
 
 #### Sign in Page
-![](./mockup/sign_in.png)
+![](sign_in.png)
 
 #### Create contact Page
-![](./mockup/contact-create.png)
+![](contact-create.png)
 
 #### Contact list Page
-![](./mockup/contact-list.png)
+![](contact-list.png)
 
 #### Contact details Page
-![](./mockup/contact-detail.png)
+![](contact-detail.png)
 
 #### Create Deal Page
-![](./mockup/deal-create.png)
+![](deal-create.png)
 
 #### Deal details Page
-![](./mockup/deal-details.png)
+![](deal-details.png)
 
 
 ### Data
 
-![](./mockup/sql-diagram.png)
+![](sql-diagram.png)
 
 **GET /contacts**
 Get all contacts.
