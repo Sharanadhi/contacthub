@@ -100,15 +100,15 @@ function AddDealForm({  setDeals, contact_id }) {
   }, []);
 
   return (
-    <form className="deals__form" onSubmit={addDeal}>
-      <div className="form__half">
+    <form className="deals-section__form" onSubmit={addDeal}>
+      <div className="">
         <div className="input__group">
           <label htmlFor="deal_title">Title</label>
           <input
             type="text"
             name="deal_title"
             placeholder="Title"
-            className="createContact__input"
+            className=""
             onChange={handleDealFormChange}
             value={dealForm.title}
           />
@@ -134,7 +134,7 @@ function AddDealForm({  setDeals, contact_id }) {
             type="text"
             name="deal_product"
             placeholder="Product"
-            className="createContact__input"
+            className=""
             onChange={handleDealFormChange}
             value={dealForm.product}
           />
@@ -146,7 +146,7 @@ function AddDealForm({  setDeals, contact_id }) {
             type="number"
             name="deal_amount"
             placeholder="Amount"
-            className="createContact__input"
+            className=""
             onChange={handleDealFormChange}
             value={dealForm.amount}
           />
@@ -158,7 +158,7 @@ function AddDealForm({  setDeals, contact_id }) {
         <textarea
           name="deal_description"
           placeholder="Description"
-          className="createContact__input"
+          className=""
           onChange={handleDealFormChange}
           value={dealForm.description}
         ></textarea>

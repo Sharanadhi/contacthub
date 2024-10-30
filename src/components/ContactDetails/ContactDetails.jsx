@@ -346,7 +346,7 @@ function ContactDetails() {
               <CustomTimeline logs={logs} />
             </TabPanel>
             <TabPanel value={tabvalue} index={2}>
-              <section className="deals">
+              <section className="deals-section">
                 <h2>Deals</h2>
                 <AddDealForm setDeals={setDeals} contact_id={contact_id}/>
                 <Divider className="divider" variant="middle"/>

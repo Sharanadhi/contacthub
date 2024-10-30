@@ -8,20 +8,20 @@ function ContactDeals({ deals }) {
   };
 
   return (
-    <div className="deals__container">
+    <div className="deals-section__container">
       {deals.length === 0 ? (
         <h2>No deals available</h2>
       ) : (
         deals.map((deal, index) => (
-          <div className="deals__card" key={index}>
-            <div className="deals__body">
-              <h3 className="deals__title">{deal.title}</h3>
+          <div className="deals-section__card" key={index}>
+            <div className="deals-section__body">
+              <h3 className="deals-section__title">{deal.title}</h3>
               <p><b>Product:</b> {deal.product}</p>
               <p><b>Amount:</b> {deal.amount}</p>
               <p><b>Status:</b> {deal.status}</p>
-              <p className="deals__desc">{deal.description}</p>
+              <p className="deals-section__desc">{deal.description}</p>
             </div>
-            <div className="deals__footer">
+            <div className="deals-section__footer">
               <button className="primary__btn" onClick={() => handleViewClick(deal.id)}>View</button>
             </div>
           </div>
