@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import {Link} from 'react-router-dom'
+// import {Link} from 'react-router-dom'
 import Datatables from '../Datatables/Datatables';
 import './Deals.scss';
 
@@ -41,7 +41,7 @@ function Deals() {
       <div className='deals__card'>
         <div className="deals__card-header">
           <h1 className='deals__heading'>Deals</h1>
-        <Link to={`/deals/create`} className='deals__link'>Create</Link>
+        {/* <Link to={`/deals/create`} className='deals__link'>Create</Link> */}
         </div>
         <div className='deals__card-body'>
           {loading && <p>Loading...</p>}

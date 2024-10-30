@@ -34,6 +34,11 @@ function DealDetails() {
     return `${firstName?.charAt(0) || ""}${lastName?.charAt(0) || ""}`;
   };
 
+  const openContact = () => {
+    const id = deal.contact_id;
+    navigate(`/contacts/${id}`);
+  };
+
   useEffect(() => {
       const fetchDealData = async () => {
         const token = localStorage.getItem("token");
@@ -295,7 +300,7 @@ function DealDetails() {
             </div>
           </div>
           <div className="profilecard__card-body">
-              <button className='primary__btn'>View</button>
+              <button className='primary__btn' onClick={openContact}>View</button>
             </div>
         </div>
       </div>

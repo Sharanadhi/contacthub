@@ -41,7 +41,10 @@ function Contacts() {
       <div className='contacts__card'>
         <div className="contacts__card-header">
           <h1 className='contacts__heading'>Contacts</h1>
-        <Link to={`/contacts/create`} className='contacts__link'>Create</Link>
+          <div className='contacts__header-links'>
+          <Link to={`/deals`} className='contacts__link'>Deals</Link>
+          <Link to={`/contacts/create`} className='contacts__link'>Create</Link>
+          </div>
         </div>
         <div className='contacts__card-body'>
           {loading && <p>Loading...</p>}
