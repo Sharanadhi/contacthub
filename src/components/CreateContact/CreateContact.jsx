@@ -8,7 +8,7 @@ import Breadcrumbs from "@mui/material/Breadcrumbs";
 import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
 
-import './createContact.scss'
+import './CreateContact.scss'
 // import Sidebar from '../Sidebar/Sidebar.jsx'
 
 function CreateContact() {
