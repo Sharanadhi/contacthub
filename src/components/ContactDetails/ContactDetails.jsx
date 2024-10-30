@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import axios from "axios";
+import axiosInstance from '../../utils/axios'
+
 
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
@@ -24,12 +25,14 @@ import {
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+import Navbar from "../Navbar/Navbar";
 import TabPanel from "../TabPanel/TabPanel";
 import CustomTimeline from "../CustomTimeline/CustomTimeline";
 import ContactStages from "../ContactStages/ContactStages";
 import UpdateStatus from "../UpdateStatus/UpdateStatus";
 import ContactDeals from '../ContactDeals/ContactDeals'
 import AddDealForm from '../AddDealForm/AddDealForm'
+
 
 import "./ContactDetails.scss";
 
@@ -77,7 +80,7 @@ function ContactDetails() {
     formData.append("profileImage", file);
     formData.append("contact_id", contact_id);
     try {
-      const res = await axios.post(
+      const res = await axiosInstance.post(
         `${import.meta.env.VITE_API_URL}upload`,
         formData,
         {
@@ -115,7 +118,7 @@ function ContactDetails() {
         return;
       }
       try {
-        const response = await axios.get(
+        const response = await axiosInstance.get(
           `${import.meta.env.VITE_API_URL}contacts/${contact_id}`,
           {
             headers: {
@@ -150,7 +153,7 @@ function ContactDetails() {
         return;
       }
       try {
-        const response = await axios.get(
+        const response = await axiosInstance.get(
           `${import.meta.env.VITE_API_URL}contacts/logs/${contact_id}`,
           {
             headers: {
@@ -183,7 +186,7 @@ function ContactDetails() {
         return;
       }
       try {
-        const response = await axios.get(
+        const response = await axiosInstance.get(
           `${import.meta.env.VITE_API_URL}contacts/deals/${contact_id}`,
           {
             headers: {
@@ -231,6 +234,8 @@ function ContactDetails() {
   }
 
   return (
+    <>
+    <Navbar />
     <section className="contactDetails">
       <div className="contactDetails__container">
         <div className="profilecard">
@@ -250,16 +255,14 @@ function ContactDetails() {
             )}
             {!profilePic && (
               <div className="profilecard__templatecard blue-bg" onClick={handleOpen}>
-                {/* <div className="circle__div blue-bg" onClick={handleOpen}> */}
                   <div>
                   <h1 className="profile_initials">
                     {getInitials(contact.first_name, contact.last_name)}
                   </h1>
                   </div>
                   <div className="profilecard__templatecard__overlay">
-                <FaCamera className="camera-icon"/>
-              </div>
-                {/* </div> */}
+                    <FaCamera className="camera-icon"/>
+                  </div>
               </div>
             )}
             <div className="profilecard__titlebox">
@@ -443,6 +446,7 @@ function ContactDetails() {
       </Modal>
       <ToastContainer />
     </section>
+    </>
   );
 }
 

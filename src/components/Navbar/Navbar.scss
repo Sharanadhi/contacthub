@@ -1,0 +1,86 @@
+@use "../../styles/partials/typography" as *;
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/mixins" as *;
+
+$primary-color: #333;
+$secondary-color: #fff;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background-color: $grey2;
+  color: $white1;
+
+  &__logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    a {
+      color: $white;
+    }
+  }
+
+  &__links {
+    list-style: none;
+    display: flex;
+
+    li {
+      margin-left: 2rem;
+    }
+
+    a {
+      color: $white;
+      text-decoration: none;
+      font-size: 1rem;
+
+      &:hover {
+        color: $white;
+      }
+    }
+  }
+
+  &__toggle {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+
+    &-icon {
+      width: 25px;
+      height: 3px;
+      background-color: $secondary-color;
+      margin: 4px 0;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar__links {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    text-align: center;
+
+    li {
+      margin: 1rem 0;
+    }
+  }
+
+  .navbar__toggle {
+    display: flex;
+  }
+}
+
+.navbar__links--active {
+  display: flex;
+}

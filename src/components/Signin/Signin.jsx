@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState,useEffect } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
 import { FaCircleExclamation } from "react-icons/fa6";
@@ -72,6 +72,13 @@ function Signin(){
       }
     }
   };
+
+  useEffect(() => {
+    const isAuthenticated = !!localStorage.getItem('token'); // or use your auth logic
+    if (isAuthenticated) {
+      navigate('/contacts');
+    }
+  }, [navigate]);
 
   return (
     <section className='signIn'>

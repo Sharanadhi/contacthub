@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import axios from 'axios';
+import axiosInstance from '../../utils/axios'
+
 import { toast, ToastContainer } from "react-toastify";
 import CustomTimeline from "../CustomTimeline/CustomTimeline";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
@@ -9,6 +10,8 @@ import Typography from "@mui/material/Typography";
 
 import "react-toastify/dist/ReactToastify.css";
 import './DealDetails.scss'
+import Navbar from '../Navbar/Navbar.jsx';
+
 
 import {
   FaPhone,
@@ -46,7 +49,7 @@ function DealDetails() {
           return;
         }
         try {
-          const response = await axios.get(
+          const response = await axiosInstance.get(
             `${import.meta.env.VITE_API_URL}deals/${deal_id}`,
             {
               headers: {
@@ -81,7 +84,7 @@ function DealDetails() {
           return;
         }
         try {
-          const response = await axios.get(
+          const response = await axiosInstance.get(
             `${import.meta.env.VITE_API_URL}deals/logs/${deal_id}`,
             {
               headers: {
@@ -114,7 +117,7 @@ function DealDetails() {
           return;
         }
         try {
-          const response = await axios.get(
+          const response = await axiosInstance.get(
             `${import.meta.env.VITE_API_URL}contacts/${contact_id}`,
             {
               headers: {
@@ -156,7 +159,7 @@ function DealDetails() {
     }
 
     try {
-      const response = await axios.put(
+      const response = await axiosInstance.put(
         `${import.meta.env.VITE_API_URL}deals/status/${deal_id}`,
         {
           status: dealStatus,
@@ -192,7 +195,9 @@ function DealDetails() {
   };
 
   return (
-    <section className="dealDetails">
+<>
+<Navbar />
+<section className="dealDetails">
       <div className="dealDetails__container">
         <div className='detailscard'>
         <div role="presentation" className="detailscard__header">
@@ -306,6 +311,7 @@ function DealDetails() {
       </div>
       <ToastContainer />
     </section>
+    </>
   )
 }
 

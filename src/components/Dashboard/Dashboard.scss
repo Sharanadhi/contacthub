@@ -1,0 +1,50 @@
+@use "../../styles/partials/typography" as *;
+@use "../../styles/partials/variables" as *;
+@use "../../styles/partials/mixins" as *;
+
+.dashboard {
+  height: 100vh;
+  &__container {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+  &__row {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.2rem;
+  }
+}
+
+.card {
+  width: 100%;
+  padding: 1.2rem 2.4rem;
+  margin: 1.2rem 2.4rem;
+  border-radius: 24px;
+  background-color: $white;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+
+  &__count-dark {
+    // color: $white;
+    background-color: #aec3b0;
+  }
+  &__count-primary {
+    background-color: #eff6e0;
+    // color: $white;
+  }
+  &__count-warning {
+    background-color: #598392;
+    color: $white;
+  }
+  &__count-success {
+    background-color: #124559;
+    color: $white;
+  }
+  &__graph {
+    max-height: 32rem;
+  }
+}

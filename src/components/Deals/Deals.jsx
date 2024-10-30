@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
-// import {Link} from 'react-router-dom'
+import axiosInstance from '../../utils/axios'
+
+import {Link} from 'react-router-dom'
 import Datatables from '../Datatables/Datatables';
+import Navbar from '../Navbar/Navbar';
 import './Deals.scss';
 
 function Deals() {
@@ -18,7 +20,7 @@ function Deals() {
         return;
       }
       try {
-        const response = await axios.get(`${import.meta.env.VITE_API_URL}deals`, {
+        const response = await axiosInstance.get(`${import.meta.env.VITE_API_URL}deals`, {
           headers: {
             authorization: `Bearer ${token}`
           }
@@ -37,11 +39,13 @@ function Deals() {
   }, []);
 
   return (
+    <>
+    <Navbar />
     <section className="deals">
       <div className='deals__card'>
         <div className="deals__card-header">
           <h1 className='deals__heading'>Deals</h1>
-        {/* <Link to={`/deals/create`} className='deals__link'>Create</Link> */}
+        <Link to={`/contacts`} className='deals__link'>Contacts</Link>
         </div>
         <div className='deals__card-body'>
           {loading && <p>Loading...</p>}
@@ -50,6 +54,7 @@ function Deals() {
         </div>
       </div>
     </section>
+    </>
   );
 }
 

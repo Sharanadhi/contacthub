@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import axios from 'axios';
+import axiosInstance from '../../utils/axios'
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { FaCircleExclamation } from "react-icons/fa6";
@@ -35,8 +35,7 @@ function AddDealForm({  setDeals, contact_id }) {
   const fetchDeals = async () => {
     const token = localStorage.getItem('token');
     try {
-      const response = await axios.get(
-        `${import.meta.env.VITE_API_URL}contacts/deals/${contact_id}`,
+      const response = await axiosInstance.get(`contacts/deals/${contact_id}`,
         {
           headers: {
             authorization: `Bearer ${token}`,
@@ -59,7 +58,7 @@ function AddDealForm({  setDeals, contact_id }) {
       return;
     }
     try {
-      const response = await axios.post(`${import.meta.env.VITE_API_URL}deals`, dealForm, {
+      const response = await axiosInstance.post(`deals`, dealForm, {
         headers: {
           authorization: `Bearer ${token}`
         }
@@ -97,7 +96,7 @@ function AddDealForm({  setDeals, contact_id }) {
 
   useEffect(() => {
     fetchDeals();
-  }, []);
+  }, [fetchDeals]);
 
   return (
     <form className="deals-section__form" onSubmit={addDeal}>

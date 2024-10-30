@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
+import axiosInstance from '../../utils/axios'
+
 import Divider from "@mui/material/Divider";
 
 import { FaCircleExclamation } from "react-icons/fa6";
@@ -54,7 +55,7 @@ function UpdateStatus({
       return;
     }
     try {
-      const response = await axios.get(
+      const response = await axiosInstance.get(
         `${import.meta.env.VITE_API_URL}contacts/logs/${contact.id}`,
         {
           headers: {
@@ -91,7 +92,7 @@ function UpdateStatus({
     }
 
     try {
-      const response = await axios.put(
+      const response = await axiosInstance.put(
         `${import.meta.env.VITE_API_URL}contacts/status/${contact.id}`,
         {
           status: contactStatus,
@@ -163,7 +164,7 @@ function UpdateStatus({
       return;
     }
     try {
-      const response = await axios.put(`${baseUrl}contacts/${contact.id}`, formData, {
+      const response = await axiosInstance.put(`${baseUrl}contacts/${contact.id}`, formData, {
         headers: {
           authorization: `Bearer ${token}`
         }

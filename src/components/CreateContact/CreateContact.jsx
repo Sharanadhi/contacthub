@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import axios from 'axios'
+import axiosInstance from '../../utils/axios'
 import { useNavigate } from 'react-router-dom';
 import { FaCircleExclamation } from "react-icons/fa6";
 import { ToastContainer, toast } from 'react-toastify';
@@ -7,9 +7,8 @@ import 'react-toastify/dist/ReactToastify.css'
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
-
+import Navbar from '../Navbar/Navbar';
 import './CreateContact.scss'
-// import Sidebar from '../Sidebar/Sidebar.jsx'
 
 function CreateContact() {
   const [formData, setFormData] = useState(
@@ -70,7 +69,7 @@ function CreateContact() {
       return;
     }
     try {
-      const response = await axios.post(`${baseUrl}contacts`, formData, {
+      const response = await axiosInstance.post(`${baseUrl}contacts`, formData, {
         headers: {
           authorization: `Bearer ${token}`
         }
@@ -108,8 +107,6 @@ function CreateContact() {
       
       if (error.response && error.response.data && error.response.data.error) {
         setApiError(error.response.data.error);
-        // if(error.response.data.type==='email') setEmailApiError(error.response.data.error);
-        // if(error.response.data.type==='phone') setPhoneApiError(error.response.data.error)
       } else {
         setApiError("An error occurred during creating the contact. Please try again later");
       }
@@ -137,9 +134,8 @@ function CreateContact() {
 
   return (
     <>
+    <Navbar />
       <section className="createContact">
-      {/* <Sidebar /> */}
-
         <div className='createContact__card'>
         <Breadcrumbs aria-label="breadcrumb">
               <Link underline="hover" color="inherit" href="/contacts">
@@ -155,95 +151,86 @@ function CreateContact() {
           <div className="createContact__card-body">
             <form onSubmit={handleSubmit} className="createContact__form">
               <div className="form__section">
-              <div className="input__group">
-                <label htmlFor="first_name">First Name</label>
-                <input type="text" name="first_name" placeholder='First Name' className='createContact__input' value={formData.first_name}
-              onChange={handleChange}/>
-            {errors.first_name && <span className="error-message"><FaCircleExclamation /> 
-            {errors.first_name}</span>}  
-              </div>
+                <div className="input__group">
+                  <label htmlFor="first_name">First Name</label>
+                  <input type="text" name="first_name" placeholder='First Name' className='createContact__input' value={formData.first_name}
+                    onChange={handleChange}/>
+                    {errors.first_name && <span className="error-message"><FaCircleExclamation /> 
+                    {errors.first_name}</span>}  
+                </div>
 
-              <div className="input__group">
-                <label htmlFor="last_name">Last Name</label>
-                <input type="text" name="last_name" placeholder='Last Name' className='createContact__input'value={formData.last_name}
-              onChange={handleChange}/>
-            {errors.last_name && <span className="error-message"><FaCircleExclamation /> 
-            {errors.last_name}</span>}  
-              </div>
+                <div className="input__group">
+                  <label htmlFor="last_name">Last Name</label>
+                  <input type="text" name="last_name" placeholder='Last Name' className='createContact__input'value={formData.last_name}
+                    onChange={handleChange}/>
+                    {errors.last_name && <span className="error-message"><FaCircleExclamation /> 
+                    {errors.last_name}</span>}  
+                </div>
 
-              <div className="input__group">
-                <label htmlFor="company">Company</label>
-                <input type="text" name="company" placeholder='Company' className='createContact__input'value={formData.company}
-              onChange={handleChange}/>
-            {errors.company && <span className="error-message"><FaCircleExclamation /> 
-            {errors.company}</span>}  
-              </div>
+                <div className="input__group">
+                  <label htmlFor="company">Company</label>
+                  <input type="text" name="company" placeholder='Company' className='createContact__input'value={formData.company}
+                    onChange={handleChange}/>
+                    {errors.company && <span className="error-message"><FaCircleExclamation /> 
+                    {errors.company}</span>}  
+                </div>
 
-              <div className="input__group">
-                <label htmlFor="job_title">Job Title</label>
-                <input type="text" name="job_title" placeholder='Job Title' className='createContact__input' value={formData.job_title}
-              onChange={handleChange}/>
-            {errors.job_title && <span className="error-message"><FaCircleExclamation /> 
-            {errors.job_title}</span>}  
-              </div>
+                <div className="input__group">
+                  <label htmlFor="job_title">Job Title</label>
+                  <input type="text" name="job_title" placeholder='Job Title' className='createContact__input' value={formData.job_title}
+                    onChange={handleChange}/>
+                    {errors.job_title && <span className="error-message"><FaCircleExclamation /> 
+                    {errors.job_title}</span>}  
+                </div>
 
-              <div className="input__group">
-                <label htmlFor="address">Address</label>
-                <input type='text' name="address"  placeholder='Address' className='createContact__input' value={formData.address}
-              onChange={handleChange}/>
-            {errors.address && <span className="error-message"><FaCircleExclamation /> 
-            {errors.address}</span>}  
-            {apiError && <span className="error-message">{apiError}</span>} 
-
-              </div>
-
-              {/* <div className="input__group">
-                <label htmlFor="">Image</label>
-                <input type="text" placeholder='contact image' className='createContact__input'/>
-              </div> */}
+                <div className="input__group">
+                  <label htmlFor="address">Address</label>
+                  <input type='text' name="address"  placeholder='Address' className='createContact__input' value={formData.address}
+                    onChange={handleChange}/>
+                    {errors.address && <span className="error-message"><FaCircleExclamation /> 
+                    {errors.address}</span>}  
+                    {apiError && <span className="error-message">{apiError}</span>} 
+                </div>
               </div>
 
               <div className="form__section">
-              <div className="input__group">
-                <label htmlFor="personal_phone">Mobile Phone</label>
-                <input type="text" name="personal_phone" placeholder='Phone' className='createContact__input'value={formData.personal_phone}
-              onChange={handleChange}/>
-            {errors.personal_phone && <span className="error-message"><FaCircleExclamation /> 
-            {errors.personal_phone}</span>}  
-              </div>
+                <div className="input__group">
+                  <label htmlFor="personal_phone">Mobile Phone</label>
+                  <input type="text" name="personal_phone" placeholder='Phone' className='createContact__input'value={formData.personal_phone}
+                    onChange={handleChange}/>
+                    {errors.personal_phone && <span className="error-message"><FaCircleExclamation /> 
+                    {errors.personal_phone}</span>}  
+                </div>
 
-              <div className="input__group">
-                <label htmlFor="business_phone">Business Phone</label>
-                <input type="text" name="business_phone" placeholder='Phone' className='createContact__input'value={formData.business_phone}
-              onChange={handleChange}/>
-            {errors.business_phone && <span className="error-message"><FaCircleExclamation /> 
-            {errors.business_phone}</span>}  
-              </div>
+                <div className="input__group">
+                  <label htmlFor="business_phone">Business Phone</label>
+                  <input type="text" name="business_phone" placeholder='Phone' className='createContact__input'value={formData.business_phone}
+                    onChange={handleChange}/>
+                    {errors.business_phone && <span className="error-message"><FaCircleExclamation /> 
+                    {errors.business_phone}</span>}  
+                </div>
 
-              <div className="input__group">
-                <label htmlFor="personal_email">Personal Email</label>
-                <input type="text" name="personal_email" placeholder='Email' className='createContact__input'value={formData.personal_email}
-              onChange={handleChange}/>
-            {errors.personal_email && <span className="error-message"><FaCircleExclamation /> 
-            {errors.personal_email}</span>}  
-              </div>
+                <div className="input__group">
+                  <label htmlFor="personal_email">Personal Email</label>
+                  <input type="text" name="personal_email" placeholder='Email' className='createContact__input'value={formData.personal_email}
+                    onChange={handleChange}/>
+                    {errors.personal_email && <span className="error-message"><FaCircleExclamation /> 
+                    {errors.personal_email}</span>}  
+                </div>
 
-              <div className="input__group">
-                <label htmlFor="business_email">Business Email</label>
-                <input type="text" name="business_email" placeholder='Email' className='createContact__input'value={formData.business_email}
-              onChange={handleChange}/>
-            {errors.business_email && <span className="error-message"><FaCircleExclamation /> 
-            {errors.business_email}</span>}  
+                <div className="input__group">
+                  <label htmlFor="business_email">Business Email</label>
+                  <input type="text" name="business_email" placeholder='Email' className='createContact__input'value={formData.business_email}
+                    onChange={handleChange}/>
+                    {errors.business_email && <span className="error-message"><FaCircleExclamation /> 
+                    {errors.business_email}</span>}  
+                </div>
+                <div className="input__group">
+                  <label htmlFor="">Linked in</label>
+                  <input type="text" placeholder='Linked in profile url' className='createContact__input' name='linked_in'  value={formData.linked_in}
+                    onChange={handleChange}/>
+                </div>
               </div>
-              
-             
-              <div className="input__group">
-                <label htmlFor="">Linked in</label>
-                <input type="text" placeholder='Linked in profile url' className='createContact__input' name='linked_in'  value={formData.linked_in}
-              onChange={handleChange}/>
-              </div>
-              </div>
-             
               <ToastContainer />
             </form>
           </div>
@@ -254,7 +241,7 @@ function CreateContact() {
         </div>
       </section>
     </>
-)
+  )
 }
 
 export default CreateContact
