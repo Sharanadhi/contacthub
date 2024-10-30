@@ -47,7 +47,6 @@ Sales Teams: Needing tools to track deals, manage leads, and close sales efficie
 
 --Front-end:
     -React
-    -TypeScript
     -Material-UI for design components
 --Back-end:
     -Node.js
