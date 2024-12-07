@@ -21,7 +21,6 @@ const Card = ({ data }) => {
       )}
        {!data.profile_picture && (
         <div className="card__templatecard">
-         
             <h1 className="card_initials">
               {getInitials(data.first_name, data.last_name)}
             </h1>

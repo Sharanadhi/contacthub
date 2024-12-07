@@ -6,7 +6,7 @@ const useBlockBackNavigation = () => {
 
   useEffect(() => {
     const handlePopState = (event) => {
-      const isAuthenticated = !!localStorage.getItem('token'); // or use your auth logic
+      const isAuthenticated = !!localStorage.getItem('token'); 
       if (isAuthenticated && event.state && event.state.navigationTriggered) {
         navigate('/contacts');
       }
